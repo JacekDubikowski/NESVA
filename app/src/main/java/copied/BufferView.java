@@ -124,7 +124,7 @@ public class BufferView extends JPanel {
             } catch (Exception e) {
 
                 // Unable to create image. Fall back to software scaling:
-                //System.out.println("Unable to create HW accellerated image.");
+                System.out.println("Unable to create HW accellerated image.");
                 scaleMode = ScaleMode.NORMAL;
                 img = new BufferedImage(width * scale, height * scale, BufferedImage.TYPE_INT_RGB);
 
@@ -238,7 +238,7 @@ public class BufferView extends JPanel {
 
             // Scaled drawing:
             paintFPS(0, 14, g);
-            paint_scaled(g);
+            paintScaled(g);
 
         } else if (img != null && g != null) {
 
@@ -250,7 +250,7 @@ public class BufferView extends JPanel {
 
     }
 
-    public void paint_scaled(Graphics g) {
+    public void paintScaled(Graphics g) {
 
         // Skip if not needed:
         if (usingMenu) {

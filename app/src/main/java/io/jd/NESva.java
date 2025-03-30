@@ -91,6 +91,7 @@ public class NESva extends Frame {
     public void addScreenView() {
         var panelScreen = (ScreenView) gui.getScreenView();
         panelScreen.setFPSEnabled(config.fps());
+        this.add(panelScreen);
 
         if (config.scale()) {
 
@@ -111,7 +112,6 @@ public class NESva extends Frame {
         }
 
         this.setIgnoreRepaint(true);
-        this.add(panelScreen);
         this.repaint();
     }
 
