@@ -19,7 +19,7 @@ import copied.CPU;
 import copied.NES;
 import copied.ROM;
 
-public class Mapper075 extends MapperDefault {
+class Mapper075 extends MapperDefault {
 
     int[] regs = new int[2];
 

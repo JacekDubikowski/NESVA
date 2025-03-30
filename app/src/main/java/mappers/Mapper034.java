@@ -17,7 +17,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import copied.NES;
 
-public class Mapper034 extends MapperDefault {
+class Mapper034 extends MapperDefault {
 
     public void init(NES nes) {
         super.init(nes);

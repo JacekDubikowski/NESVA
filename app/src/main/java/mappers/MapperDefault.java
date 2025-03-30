@@ -24,7 +24,7 @@ import copied.PPU;
 import copied.ROM;
 import copied.Tile;
 
-public class MapperDefault implements MemoryMapper {
+class MapperDefault implements MemoryMapper {
 
     public NES nes;
     public Memory cpuMem;

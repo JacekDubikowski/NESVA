@@ -20,7 +20,7 @@ import copied.CPU;
 import copied.NES;
 import copied.ROM;
 
-public class Mapper018 extends MapperDefault {
+class Mapper018 extends MapperDefault {
 
     int num_8k_banks;
     int patch = 0;

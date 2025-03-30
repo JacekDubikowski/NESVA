@@ -20,7 +20,7 @@ import copied.CPU;
 import copied.NES;
 import copied.ROM;
 
-public class Mapper105 extends MapperDefault {
+class Mapper105 extends MapperDefault {
 
     int bits = 0;
     int write_count = 0;

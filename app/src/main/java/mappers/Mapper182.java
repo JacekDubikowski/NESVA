@@ -19,7 +19,7 @@ import copied.CPU;
 import copied.NES;
 import copied.ROM;
 
-public class Mapper182 extends MapperDefault {
+class Mapper182 extends MapperDefault {
 
     private int irq_counter = 0;
     private boolean irq_enabled = false;

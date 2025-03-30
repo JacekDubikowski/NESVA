@@ -19,7 +19,7 @@ import copied.CPU;
 import copied.NES;
 import copied.ROM;
 
-public class Mapper079 extends MapperDefault {
+class Mapper079 extends MapperDefault {
 
     public void init(NES nes) {
 

@@ -19,7 +19,7 @@ import copied.ByteBuffer;
 import copied.NES;
 import copied.ROM;
 
-public class Mapper007 extends MapperDefault {
+class Mapper007 extends MapperDefault {
 
     int currentOffset;
     int currentMirroring;

@@ -20,7 +20,7 @@ import copied.CPU;
 import copied.NES;
 import copied.ROM;
 
-public class Mapper010 extends MapperDefault {
+class Mapper010 extends MapperDefault {
 
     int latchLo;
     int latchHi;

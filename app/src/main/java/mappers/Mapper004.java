@@ -20,7 +20,7 @@ import copied.CPU;
 import copied.NES;
 import copied.ROM;
 
-public class Mapper004 extends MapperDefault {
+class Mapper004 extends MapperDefault {
 
     public static final int CMD_SEL_2_1K_VROM_0000 = 0;
     public static final int CMD_SEL_2_1K_VROM_0800 = 1;

@@ -265,7 +265,7 @@ public class NES {
 
                 reset();
 
-                memMapper = rom.createMapper();
+                memMapper = rom.memoryMapper;
                 memMapper.init(this);
                 cpu.setMapper(memMapper);
                 memMapper.loadROM(rom);

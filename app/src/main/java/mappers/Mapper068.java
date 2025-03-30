@@ -18,7 +18,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 import copied.CPU;
 import copied.ROM;
 
-public class Mapper068 extends MapperDefault {
+class Mapper068 extends MapperDefault {
 
     int r1, r2, r3, r4;
 

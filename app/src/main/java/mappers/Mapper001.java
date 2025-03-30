@@ -20,7 +20,7 @@ import copied.CPU;
 import copied.NES;
 import copied.ROM;
 
-public class Mapper001 extends MapperDefault {
+class Mapper001 extends MapperDefault {
 
     // Register flags:
 
