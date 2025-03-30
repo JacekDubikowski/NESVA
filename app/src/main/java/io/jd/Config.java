@@ -1,31 +1,31 @@
 package io.jd;
 
+import copied.BufferView;
+
 public record Config(
         String rom,
-        boolean scale,
         boolean sound,
         boolean stereo,
-        boolean scanlines,
         boolean fps,
         boolean timeemulation,
         boolean showsoundbuffer,
         PlayerControls player1Controls,
         PlayerControls player2Controls,
-        int romSize
+        int romSize,
+        BufferView.ScaleMode scaleMode
 ) {
     public static Config get(String rom) {
         return new Config(
                 rom,
                 true,
                 true,
-                true,
-                false,
                 false,
                 true,
                 false,
                 PlayerControls.PLAYER1_DEFAULT,
                 PlayerControls.PLAYER2_DEFAULT,
-                -1
+                -1,
+                BufferView.ScaleMode.NORMAL
         );
     }
 }

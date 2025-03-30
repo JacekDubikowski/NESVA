@@ -216,6 +216,7 @@ public class BufferView extends JPanel {
         // Check differences:
         // Change scale mode:
         this.scaleMode = newMode;
+        setBounds(0, 0, scaleMode.getWidth(), scaleMode.getHeight());
         createView();
     }
 
@@ -314,6 +315,7 @@ public class BufferView extends JPanel {
         }
 
     }
+
     public void setUsingMenu(boolean val) {
         usingMenu = val;
     }

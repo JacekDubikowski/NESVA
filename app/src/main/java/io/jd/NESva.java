@@ -6,7 +6,6 @@ import java.awt.event.WindowEvent;
 import java.util.concurrent.Executors;
 
 import copied.AppletUI;
-import copied.BufferView;
 import copied.Globals;
 import copied.NES;
 import copied.ScreenView;
@@ -28,8 +27,6 @@ public class NESva extends Frame {
     public static void main(String[] args) {
         var nesva = new NESva(Config.get(args[0]));
         try {
-            nesva.setSize(512, 480);
-            nesva.setVisible(true);
             nesva.init();
             nesva.start();
             nesva.addWindowListener(new WindowAdapter() {
@@ -49,14 +46,14 @@ public class NESva extends Frame {
         nes = gui.getNES();
         nes.enableSound(config.sound());
         nes.reset();
+        setSize(config.scaleMode().getWidth(), config.scaleMode().getHeight());
+        setBounds(0, 0, config.scaleMode().getWidth(), config.scaleMode().getHeight());
+        setVisible(true);
     }
 
     public void start() {
-
         // Can start painting:
         started = true;
-
-        // Load ROM file:
         try (var exec = Executors.newSingleThreadExecutor()) {
             exec.submit(this::run);
         }
@@ -86,28 +83,12 @@ public class NESva extends Frame {
     }
 
     public void addScreenView() {
-        var panelScreen = (ScreenView) gui.getScreenView();
+        var panelScreen = gui.getScreenView();
         panelScreen.setFPSEnabled(config.fps());
         this.add(panelScreen);
-
-        if (config.scale()) {
-
-            if (config.scanlines()) {
-                panelScreen.setScaleMode(BufferView.ScaleMode.SCANLINE);
-            } else {
-                panelScreen.setScaleMode(BufferView.ScaleMode.HW3X);
-            }
-
-            this.setSize(512, 480);
-            this.setBounds(0, 0, 512, 480);
-            panelScreen.setBounds(0, 0, 512, 480);
-
-        } else {
-
-            panelScreen.setBounds(0, 0, 256, 240);
-
+        if (config.scaleMode().isScalingEnabled()) {
+            panelScreen.setScaleMode(config.scaleMode());
         }
-
         this.setIgnoreRepaint(true);
         this.repaint();
     }
@@ -145,20 +126,11 @@ public class NESva extends Frame {
     public void paint(Graphics g) {
         String pad;
         String disp;
-        int scrw, scrh;
+        int scrw = config.scaleMode().getWidth(), scrh = config.scaleMode().getHeight();
         int txtw, txth;
 
         if (!started) {
             return;
-        }
-
-        // Get screen size:
-        if (config.scale()) {
-            scrw = 512;
-            scrh = 480;
-        } else {
-            scrw = 256;
-            scrh = 240;
         }
 
         // Fill background:
