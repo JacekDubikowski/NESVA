@@ -38,9 +38,9 @@ class Mapper182 extends MapperDefault {
             switch (address & 0xF003) {
                 case 0x8001: {
                     if ((value & 0x01) != 0) {
-                        nes.getPpu().setMirroring(ROM.HORIZONTAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.HORIZONTAL_MIRRORING);
                     } else {
-                        nes.getPpu().setMirroring(ROM.VERTICAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.VERTICAL_MIRRORING);
                     }
                 }
                 break;

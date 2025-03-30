@@ -102,12 +102,12 @@ class Mapper010 extends MapperDefault {
                     if ((value & 0x1) == 0) {
 
                         // Vertical mirroring
-                        nes.getPpu().setMirroring(ROM.VERTICAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.VERTICAL_MIRRORING);
 
                     } else {
 
                         // Horizontal mirroring
-                        nes.getPpu().setMirroring(ROM.HORIZONTAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.HORIZONTAL_MIRRORING);
 
                     }
                     break;

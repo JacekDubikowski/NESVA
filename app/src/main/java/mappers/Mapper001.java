@@ -166,11 +166,11 @@ class Mapper001 extends MapperDefault {
                 if ((mirroring & 2) == 0) {
                     // SingleScreen mirroring overrides the other setting:
                     ////System.out.println("MMC1: Setting Singlescreen Mirroring.");
-                    nes.getPpu().setMirroring(ROM.SINGLESCREEN_MIRRORING);
+                    nes.getPpu().setMirroring(MirroringType.SINGLESCREEN_MIRRORING);
                 } else {
                     // Not overridden by SingleScreen mirroring.
                     ////System.out.println("MMC1: Setting Normal Mirroring. value="+mirroring);
-                    nes.getPpu().setMirroring((mirroring & 1) != 0 ? ROM.HORIZONTAL_MIRRORING : ROM.VERTICAL_MIRRORING);
+                    nes.getPpu().setMirroring((mirroring & 1) != 0 ? MirroringType.HORIZONTAL_MIRRORING : MirroringType.VERTICAL_MIRRORING);
                 }
             }
 

@@ -231,11 +231,11 @@ class Mapper018 extends MapperDefault {
                     value &= 0x03;
 
                     if (value == 0) {
-                        nes.getPpu().setMirroring(ROM.HORIZONTAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.HORIZONTAL_MIRRORING);
                     } else if (value == 1) {
-                        nes.getPpu().setMirroring(ROM.VERTICAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.VERTICAL_MIRRORING);
                     } else {
-                        nes.getPpu().setMirroring(ROM.SINGLESCREEN_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.SINGLESCREEN_MIRRORING);
                     }
 
                 }

@@ -40,9 +40,9 @@ class Mapper075 extends MapperDefault {
 
                 case 0x9000: {
                     if ((value & 0x01) != 0) {
-                        nes.getPpu().setMirroring(ROM.HORIZONTAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.HORIZONTAL_MIRRORING);
                     } else {
-                        nes.getPpu().setMirroring(ROM.VERTICAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.VERTICAL_MIRRORING);
                     }
 
                     regs[0] = (regs[0] & 0x0F) | ((value & 0x02) << 3);

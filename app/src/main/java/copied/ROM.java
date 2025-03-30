@@ -16,20 +16,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import mappers.MemoryMapper;
+import mappers.MirroringType;
 
 import static mappers.MapperFactory.mapperForType;
 
 public class ROM {
-
-    // Mirroring types:
-    public static final int VERTICAL_MIRRORING = 0;
-    public static final int HORIZONTAL_MIRRORING = 1;
-    public static final int FOURSCREEN_MIRRORING = 2;
-    public static final int SINGLESCREEN_MIRRORING = 3;
-    public static final int SINGLESCREEN_MIRRORING2 = 4;
-    public static final int SINGLESCREEN_MIRRORING3 = 5;
-    public static final int SINGLESCREEN_MIRRORING4 = 6;
-    public static final int CHRROM_MIRRORING = 7;
 
     public static final String EXPECTED_FCODE = "NES" + new String(new byte[]{0x1A});
     boolean failedSaveFile = false;
@@ -203,15 +194,15 @@ public class ROM {
     public int getMirroringType() {
 
         if (fourScreen) {
-            return FOURSCREEN_MIRRORING;
+            return MirroringType.FOURSCREEN_MIRRORING;
         }
 
         if (mirroring == 0) {
-            return HORIZONTAL_MIRRORING;
+            return MirroringType.HORIZONTAL_MIRRORING;
         }
 
         // default:
-        return VERTICAL_MIRRORING;
+        return MirroringType.VERTICAL_MIRRORING;
 
     }
 

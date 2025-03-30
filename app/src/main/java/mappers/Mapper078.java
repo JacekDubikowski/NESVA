@@ -41,9 +41,9 @@ class Mapper078 extends MapperDefault {
 
             if ((address & 0xFE00) != 0xFE00) {
                 if ((value & 0x08) != 0) {
-                    nes.getPpu().setMirroring(ROM.SINGLESCREEN_MIRRORING2);
+                    nes.getPpu().setMirroring(MirroringType.SINGLESCREEN_MIRRORING2);
                 } else {
-                    nes.getPpu().setMirroring(ROM.SINGLESCREEN_MIRRORING);
+                    nes.getPpu().setMirroring(MirroringType.SINGLESCREEN_MIRRORING);
                 }
             }
         }

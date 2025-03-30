@@ -54,13 +54,13 @@ class Mapper021 extends MapperDefault {
                 case 0x9000: {
                     value &= 0x03;
                     if (value == 0) {
-                        nes.getPpu().setMirroring(ROM.VERTICAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.VERTICAL_MIRRORING);
                     } else if (value == 1) {
-                        nes.getPpu().setMirroring(ROM.HORIZONTAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.HORIZONTAL_MIRRORING);
                     } else if (value == 2) {
-                        nes.getPpu().setMirroring(ROM.SINGLESCREEN_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.SINGLESCREEN_MIRRORING);
                     } else {
-                        nes.getPpu().setMirroring(ROM.SINGLESCREEN_MIRRORING2);
+                        nes.getPpu().setMirroring(MirroringType.SINGLESCREEN_MIRRORING2);
                     }
                 }
                 break;

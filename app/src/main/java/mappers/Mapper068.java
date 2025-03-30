@@ -110,19 +110,19 @@ class Mapper068 extends MapperDefault {
             // Normal mirroring modes:
             switch (r2) {
                 case 0: {
-                    ppu.setMirroring(ROM.HORIZONTAL_MIRRORING);
+                    ppu.setMirroring(MirroringType.HORIZONTAL_MIRRORING);
                     break;
                 }
                 case 1: {
-                    ppu.setMirroring(ROM.VERTICAL_MIRRORING);
+                    ppu.setMirroring(MirroringType.VERTICAL_MIRRORING);
                     break;
                 }
                 case 2: {
-                    ppu.setMirroring(ROM.SINGLESCREEN_MIRRORING);
+                    ppu.setMirroring(MirroringType.SINGLESCREEN_MIRRORING);
                     break;
                 }
                 case 3: {
-                    ppu.setMirroring(ROM.SINGLESCREEN_MIRRORING2);
+                    ppu.setMirroring(MirroringType.SINGLESCREEN_MIRRORING2);
                     break;
                 }
             }

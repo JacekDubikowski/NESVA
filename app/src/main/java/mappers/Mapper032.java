@@ -46,9 +46,9 @@ class Mapper032 extends MapperDefault {
 
                 case 0x9000: {
                     if ((value & 0x01) != 0) {
-                        nes.getPpu().setMirroring(ROM.HORIZONTAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.HORIZONTAL_MIRRORING);
                     } else {
-                        nes.getPpu().setMirroring(ROM.VERTICAL_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.VERTICAL_MIRRORING);
                     }
                     regs[0] = value;
                 }
@@ -102,7 +102,7 @@ class Mapper032 extends MapperDefault {
 
                 case 0xB007: {
                     if ((patch == 1) && ((value & 0x40) != 0)) {
-                        nes.getPpu().setMirroring(ROM.SINGLESCREEN_MIRRORING);
+                        nes.getPpu().setMirroring(MirroringType.SINGLESCREEN_MIRRORING);
                     }
                     load1kVromBank(value, 0x1C00);
                 }
@@ -132,7 +132,7 @@ class Mapper032 extends MapperDefault {
     public void reset() {
 
         if (patch == 1) {
-            nes.getPpu().setMirroring(ROM.SINGLESCREEN_MIRRORING);
+            nes.getPpu().setMirroring(MirroringType.SINGLESCREEN_MIRRORING);
         }
 
         for (int i = 0; i < regs.length; i++) {

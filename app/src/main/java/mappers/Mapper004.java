@@ -114,9 +114,9 @@ class Mapper004 extends MapperDefault {
 
             // Mirroring select
             if ((value & 1) != 0) {
-                nes.getPpu().setMirroring(ROM.HORIZONTAL_MIRRORING);
+                nes.getPpu().setMirroring(MirroringType.HORIZONTAL_MIRRORING);
             } else {
-                nes.getPpu().setMirroring(ROM.VERTICAL_MIRRORING);
+                nes.getPpu().setMirroring(MirroringType.VERTICAL_MIRRORING);
             }
 
         } else if (address == 0xA001) {
