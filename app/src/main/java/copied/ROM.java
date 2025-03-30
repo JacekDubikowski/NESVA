@@ -15,8 +15,40 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.io.File;
 import java.io.RandomAccessFile;
+
+import mappers.Mapper001;
+import mappers.Mapper002;
+import mappers.Mapper003;
+import mappers.Mapper004;
+import mappers.Mapper007;
+import mappers.Mapper009;
+import mappers.Mapper010;
+import mappers.Mapper011;
+import mappers.Mapper015;
+import mappers.Mapper018;
+import mappers.Mapper021;
+import mappers.Mapper022;
+import mappers.Mapper023;
+import mappers.Mapper032;
+import mappers.Mapper033;
+import mappers.Mapper034;
+import mappers.Mapper048;
+import mappers.Mapper064;
+import mappers.Mapper066;
+import mappers.Mapper068;
+import mappers.Mapper071;
+import mappers.Mapper072;
+import mappers.Mapper075;
+import mappers.Mapper078;
+import mappers.Mapper079;
+import mappers.Mapper087;
+import mappers.Mapper094;
+import mappers.Mapper105;
+import mappers.Mapper140;
+import mappers.Mapper182;
+import mappers.MapperDefault;
+import mappers.MemoryMapper;
 
 public class ROM {
 
@@ -42,7 +74,7 @@ public class ROM {
     int romCount;
     int vromCount;
     int mirroring;
-    boolean batteryRam;
+    public boolean batteryRam;
     boolean trainer;
     boolean fourScreen;
     int mapperType;
@@ -258,7 +290,6 @@ public class ROM {
 
         if (mapperSupported()) {
             switch (mapperType) {
-
                 case 0: {
                     return new MapperDefault();
                 }

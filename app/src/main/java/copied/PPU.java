@@ -109,7 +109,7 @@ public class PPU {
     int[] spr0dummybuffer = new int[256 * 240];
     int[] dummyPixPriTable = new int[256 * 240];
     int[] oldFrame = new int[256 * 240];
-    int[] buffer;
+    public int[] buffer;
     int[] tpix;
     boolean[] scanlineChanged = new boolean[240];
     boolean requestRenderAll = false;
