@@ -153,12 +153,6 @@ class Mapper105 extends MapperDefault {
     }
 
     public void loadROM(ROM rom) {
-
-        if (!rom.isValid()) {
-            //System.out.println("Invalid ROM! Unable to load.");
-            return;
-        }
-
         // Init:
         load8kRomBank(0, 0x8000);
         load8kRomBank(1, 0xA000);

@@ -150,7 +150,7 @@ public class NES {
             papu.start();
         }
         {
-            if (rom != null && rom.isValid() && !cpu.isRunning()) {
+            if (rom != null && !cpu.isRunning()) {
                 cpu.beginExecution();
                 isRunning = true;
             }
@@ -245,38 +245,29 @@ public class NES {
 
     // Loads a ROM file into the CPU and PPU.
     // The ROM file is validated first.
-    public boolean loadRom(String file) {
+    public void loadRom(String file) {
 
         // Can't load ROM while still running.
         if (isRunning) {
             stopEmulation();
         }
 
-        {
-            // Load ROM file:
+        // Load ROM file:
 
-            rom = new ROM();
-            rom.load(file, new FileLoader(progress -> getGui().showLoadProgress(progress)));
-            if (rom.isValid()) {
+        rom = new ROM();
+        rom.load(file, new FileLoader(progress -> getGui().showLoadProgress(progress)));
 
-                // The CPU will load
-                // the ROM into the CPU
-                // and PPU memory.
+        // The CPU will load
+        // the ROM into the CPU
+        // and PPU memory.
 
-                reset();
-
-                memMapper = rom.memoryMapper;
-                memMapper.init(this);
-                cpu.setMapper(memMapper);
-                memMapper.loadROM(rom);
-                ppu.setMirroring(rom.getMirroringType());
-
-                this.romFile = file;
-
-            }
-            return rom.isValid();
-        }
-
+        reset();
+        memMapper = rom.memoryMapper;
+        memMapper.init(this);
+        cpu.setMapper(memMapper);
+        memMapper.loadROM(rom);
+        ppu.setMirroring(rom.getMirroringType());
+        this.romFile = file;
     }
 
     // Resets the system.

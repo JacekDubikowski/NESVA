@@ -152,12 +152,6 @@ class Mapper068 extends MapperDefault {
     public void loadROM(ROM rom) {
 
         //System.out.println("Loading ROM.");
-
-        if (!rom.isValid()) {
-            //System.out.println("Sunsoft#4: Invalid ROM! Unable to load.");
-            return;
-        }
-
         // Get number of PRG ROM banks:
         int num_banks = rom.getRomBankCount();
 

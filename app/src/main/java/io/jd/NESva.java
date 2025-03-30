@@ -67,10 +67,8 @@ public class NESva extends Frame {
         System.out.println("For updates, visit www.openemulation.com");
         System.out.println("Use of this program subject to GNU GPL, Version 3.");
 
-        nes.loadRom(config.rom());
-
-        if (nes.rom.isValid()) {
-
+        try {
+            nes.loadRom(config.rom());
             // Add the screen buffer:
             addScreenView();
 
@@ -81,9 +79,8 @@ public class NESva extends Frame {
             // Start emulation:
             System.out.println("vNES is now starting the processor.");
             nes.getCpu().beginExecution();
-
-        } else {
-            // ROM file was invalid.
+        } catch (Exception e) {
+            // Error loading ROM:
             System.out.println("vNES was unable to find (" + config.rom() + ").");
         }
     }

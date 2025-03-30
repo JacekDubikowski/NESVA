@@ -311,14 +311,7 @@ class Mapper001 extends MapperDefault {
     }
 
     public void loadROM(ROM rom) {
-
         //System.out.println("Loading ROM.");
-
-        if (!rom.isValid()) {
-            //System.out.println("MMC1: Invalid ROM! Unable to load.");
-            return;
-        }
-
         // Load PRG-ROM:
         loadRomBank(0, 0x8000);                //   First ROM bank..
         loadRomBank(rom.getRomBankCount() - 1, 0xC000);    // ..and last ROM bank.

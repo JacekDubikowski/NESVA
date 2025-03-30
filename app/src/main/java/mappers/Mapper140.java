@@ -28,12 +28,6 @@ class Mapper140 extends MapperDefault {
     }
 
     public void loadROM(ROM rom) {
-
-        if (!rom.isValid()) {
-            //System.out.println("Invalid ROM! Unable to load.");
-            return;
-        }
-
         // Initial Load:
         loadPRGROM();
         loadCHRROM();

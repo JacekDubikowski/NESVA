@@ -32,13 +32,6 @@ class Mapper071 extends MapperDefault {
 
     public void loadROM(ROM rom) {
 
-        //System.out.println("Loading ROM.");
-
-        if (!rom.isValid()) {
-            //System.out.println("Camerica: Invalid ROM! Unable to load.");
-            return;
-        }
-
         // Get number of PRG ROM banks:
         int num_banks = rom.getRomBankCount();
 

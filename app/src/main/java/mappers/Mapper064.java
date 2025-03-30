@@ -181,14 +181,6 @@ class Mapper064 extends MapperDefault {
     }
 
     public void loadROM(ROM rom) {
-
-        //System.out.println("Loading ROM.");
-
-        if (!rom.isValid()) {
-            //System.out.println("MMC3: Invalid ROM! Unable to load.");
-            return;
-        }
-
         int chr_banks = rom.getVromBankCount() * 4;
         int num_8k_banks = rom.getRomBankCount() * 2;
 

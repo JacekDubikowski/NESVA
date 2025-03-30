@@ -214,12 +214,6 @@ class Mapper023 extends MapperDefault {
     }
 
     public void loadROM(ROM rom) {
-
-        if (!rom.isValid()) {
-            System.out.println("VRC2: Invalid ROM! Unable to load.");
-            return;
-        }
-
         // Get number of 8K banks:
         int num_8k_banks = rom.getRomBankCount() * 2;
 

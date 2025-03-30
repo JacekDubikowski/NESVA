@@ -530,7 +530,7 @@ class MapperDefault implements MemoryMapper {
 
     public void loadROM(ROM rom) {
 
-        if (!rom.isValid() || rom.getRomBankCount() < 1) {
+        if (rom.getRomBankCount() < 1) {
             //System.out.println("NoMapper: Invalid ROM! Unable to load.");
             return;
         }

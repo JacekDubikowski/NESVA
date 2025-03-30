@@ -45,12 +45,6 @@ class Mapper002 extends MapperDefault {
     }
 
     public void loadROM(ROM rom) {
-
-        if (!rom.isValid()) {
-            //System.out.println("UNROM: Invalid ROM! Unable to load.");
-            return;
-        }
-
         //System.out.println("UNROM: loading ROM..");
 
         // Load PRG-ROM:

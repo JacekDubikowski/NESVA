@@ -264,13 +264,6 @@ class Mapper004 extends MapperDefault {
 
     public void loadROM(ROM rom) {
 
-        //System.out.println("Loading ROM.");
-
-        if (!rom.isValid()) {
-            //System.out.println("MMC3: Invalid ROM! Unable to load.");
-            return;
-        }
-
         // Load hardwired PRG banks (0xC000 and 0xE000):
         load8kRomBank(((nes.getRom().getRomBankCount() - 1) * 2), 0xC000);
         load8kRomBank(((nes.getRom().getRomBankCount() - 1) * 2) + 1, 0xE000);

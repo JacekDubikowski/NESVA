@@ -44,12 +44,6 @@ class Mapper072 extends MapperDefault {
     }
 
     public void loadROM(ROM rom) {
-
-        if (!rom.isValid()) {
-            System.out.println("048: Invalid ROM! Unable to load.");
-            return;
-        }
-
         // Get number of 8K banks:
         int num_banks = rom.getRomBankCount() * 2;
 

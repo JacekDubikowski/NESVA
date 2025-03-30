@@ -95,13 +95,6 @@ class Mapper015 extends MapperDefault {
     }
 
     public void loadROM(ROM rom) {
-
-        if (!rom.isValid()) {
-            System.out.println("015: Invalid ROM! Unable to load.");
-            return;
-
-        }
-
         // Load PRG-ROM:
         load8kRomBank(0, 0x8000);
         load8kRomBank(1, 0xA000);

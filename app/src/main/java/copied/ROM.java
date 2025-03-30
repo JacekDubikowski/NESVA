@@ -162,10 +162,6 @@ public class ROM {
         }*/
     }
 
-    public boolean isValid() {
-        return true;
-    }
-
     public int getRomBankCount() {
         return romCount;
     }
