@@ -61,6 +61,8 @@ public class ROM {
     public static final int SINGLESCREEN_MIRRORING3 = 5;
     public static final int SINGLESCREEN_MIRRORING4 = 6;
     public static final int CHRROM_MIRRORING = 7;
+
+    public static final String EXPECTED_FCODE = "NES" + new String(new byte[]{0x1A});
     static String[] mapperName;
     static boolean[] mapperSupported;
     boolean failedSaveFile = false;
@@ -70,7 +72,6 @@ public class ROM {
     short[][] vrom;
     short[] saveRam;
     Tile[][] vromTile;
-    NES nes;
     int romCount;
     int vromCount;
     int mirroring;
@@ -81,24 +82,17 @@ public class ROM {
     String fileName;
     RandomAccessFile raFile;
     boolean enableSave = true;
-    boolean valid;
 
-    public ROM(NES nes) {
-        this.nes = nes;
-        valid = false;
+    public ROM() {
     }
 
-    public void load(String fileName) {
+    public void load(String fileName, FileLoader loader) {
 
         this.fileName = fileName;
-        short[] b = FileLoader.loadFile(fileName, progress -> nes.getGui().showLoadProgress(progress));
+        short[] b = loader.loadFile(fileName);
 
         if (b == null || b.length == 0) {
-
-            // Unable to load file.
-            nes.gui.showErrorMsg("Unable to load ROM file.");
-            valid = false;
-
+            throw new IllegalArgumentException("Unable to load ROM file.");
         }
 
         // Read header:
@@ -107,10 +101,9 @@ public class ROM {
 
         // Check first four bytes:
         String fcode = new String(new byte[]{(byte) b[0], (byte) b[1], (byte) b[2], (byte) b[3]});
-        if (!fcode.equals("NES" + new String(new byte[]{0x1A}))) {
+        if (!fcode.equals(EXPECTED_FCODE)) {
             //System.out.println("Header is incorrect.");
-            valid = false;
-            return;
+            throw new IllegalArgumentException("Incorrect header of rom file '%s'".formatted(fileName));
         }
 
         // Read header:
@@ -208,13 +201,10 @@ public class ROM {
         valid = false;
         return;
         }*/
-
-        valid = true;
-
     }
 
     public boolean isValid() {
-        return valid;
+        return true;
     }
 
     public int getRomBankCount() {
@@ -388,7 +378,7 @@ public class ROM {
         }
 
         // If the mapper wasn't supported, create the standard one:
-        nes.gui.showErrorMsg("Warning: Mapper not supported yet.");
+//        nes.gui.showErrorMsg("Warning: Mapper not supported yet.");
         return new MapperDefault();
 
     }
@@ -409,7 +399,6 @@ public class ROM {
     public void destroy() {
 
 //      closeRom();
-        nes = null;
 
     }
 

@@ -25,8 +25,14 @@ import java.util.zip.ZipInputStream;
 
 public class FileLoader {
 
+    private final Consumer<Integer> progressCallback;
+
+    public FileLoader(Consumer<Integer> progressCallback) {
+        this.progressCallback = progressCallback;
+    }
+
     // Load a file.
-    public static short[] loadFile(String fileName, Consumer<Integer> progressCallback) {
+    public short[] loadFile(String fileName) {
 
         int flen;
         byte[] tmp = new byte[2048];

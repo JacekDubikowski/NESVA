@@ -255,8 +255,8 @@ public class NES {
         {
             // Load ROM file:
 
-            rom = new ROM(this);
-            rom.load(file);
+            rom = new ROM();
+            rom.load(file, new FileLoader(progress -> getGui().showLoadProgress(progress)));
             if (rom.isValid()) {
 
                 // The CPU will load
