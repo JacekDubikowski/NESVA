@@ -28,13 +28,10 @@ public class ScreenView extends BufferView {
     }
 
     public void init() {
-
         if (mouse == null) {
             mouse = new MyMouseAdapter();
             this.addMouseListener(mouse);
         }
-        super.init();
-
     }
 
     public void setNotifyImageReady(boolean value) {

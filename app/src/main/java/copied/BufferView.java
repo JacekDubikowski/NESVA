@@ -51,6 +51,7 @@ public class BufferView extends JPanel {
         }
 
     }
+
     protected NES nes;
     private BufferedImage img;
     private VolatileImage vimg;
@@ -78,8 +79,8 @@ public class BufferView extends JPanel {
         this.nes = nes;
         this.width = width;
         this.height = height;
-        this.scaleMode = ScaleMode.UNINITIALIZED;
-
+        this.scaleMode = ScaleMode.NONE;
+        createView();
     }
 
     public boolean useHWScaling() {
@@ -90,13 +91,9 @@ public class BufferView extends JPanel {
         bgColor = color;
     }
 
-    public void init() {
-        setScaleMode(ScaleMode.NONE);
-    }
-
     private void createView() {
 
-        int scale = getScaleModeScale(scaleMode);
+        int scale = scaleMode.scale;
 
         if (!scaleMode.useHWScaling()) {
             // Create new BufferedImage with scaled width & height:
@@ -206,25 +203,10 @@ public class BufferView extends JPanel {
     }
 
     public void setScaleMode(ScaleMode newMode) {
-
-        if (newMode != scaleMode) {
-
-            // Check differences:
-            boolean diffHW = newMode.useHWScaling() != scaleMode.useHWScaling();
-            boolean diffSz = getScaleModeScale(newMode) != getScaleModeScale(scaleMode);
-
-            // Change scale mode:
-            this.scaleMode = newMode;
-
-            if (diffHW || diffSz) {
-
-                // Create new view:
-                createView();
-
-            }
-
-        }
-
+        // Check differences:
+        // Change scale mode:
+        this.scaleMode = newMode;
+        createView();
     }
 
     public void paint(Graphics g) {
@@ -348,15 +330,6 @@ public class BufferView extends JPanel {
 
     public void setUsingMenu(boolean val) {
         usingMenu = val;
-    }
-
-    public int getScaleModeScale(ScaleMode mode) {
-        return switch (mode) {
-            case UNINITIALIZED -> -1;
-            case NONE -> 1;
-            case HW3X -> 3;
-            default -> 2;
-        };
     }
 
     public void destroy() {
