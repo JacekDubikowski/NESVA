@@ -32,6 +32,8 @@ public class BufferView extends JPanel {
         SCANLINE(true, false, 2),
         RASTER(true, false, 2);
 
+        private static final int BASE_WIDTH = 256;
+        private static final int BASE_HEIGHT = 240;
         private final boolean scalingEnabled;
         private final boolean useHWScaling;
         private final int scale;
@@ -50,6 +52,21 @@ public class BufferView extends JPanel {
             return useHWScaling;
         }
 
+        public int getWidth() {
+            return BASE_WIDTH * scale;
+        }
+
+        public int getHeight() {
+            return BASE_HEIGHT * scale;
+        }
+
+        public int getBaseWidth() {
+            return BASE_WIDTH;
+        }
+
+        public int getBaseHeight() {
+            return BASE_HEIGHT;
+        }
     }
 
     protected NES nes;
@@ -57,8 +74,6 @@ public class BufferView extends JPanel {
     private VolatileImage vimg;
     private boolean usingMenu = false;
     private Graphics gfx;
-    private final int width;
-    private final int height;
     private int[] pix;
     private int[] pix_scaled;
     private ScaleMode scaleMode;
@@ -73,12 +88,10 @@ public class BufferView extends JPanel {
     private int bgColor = Color.white.darker().getRGB();
     // Constructor
 
-    public BufferView(NES nes, int width, int height) {
+    public BufferView(NES nes) {
 
         super(false);
         this.nes = nes;
-        this.width = width;
-        this.height = height;
         this.scaleMode = ScaleMode.NONE;
         createView();
     }
@@ -92,16 +105,13 @@ public class BufferView extends JPanel {
     }
 
     private void createView() {
-
-        int scale = scaleMode.scale;
-
         if (!scaleMode.useHWScaling()) {
             // Create new BufferedImage with scaled width & height:
-            img = new BufferedImage(width * scaleMode.scale, height * scaleMode.scale, BufferedImage.TYPE_INT_RGB);
+            img = new BufferedImage(scaleMode.getWidth(), scaleMode.getHeight(), BufferedImage.TYPE_INT_RGB);
         } else {
 
             // Create new BufferedImage with normal width & height:
-            img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            img = new BufferedImage(scaleMode.getBaseWidth(), scaleMode.getBaseHeight(), BufferedImage.TYPE_INT_RGB);
 
             // Create graphics object to use for FPS display:
             gfx = img.createGraphics();
@@ -116,14 +126,14 @@ public class BufferView extends JPanel {
             try {
 
                 // Create hardware accellerated image:
-                vimg = createVolatileImage(width, height, new ImageCapabilities(true));
+                vimg = createVolatileImage(scaleMode.getBaseWidth(), scaleMode.getBaseHeight(), new ImageCapabilities(true));
 
             } catch (Exception e) {
 
                 // Unable to create image. Fall back to software scaling:
                 System.out.println("Unable to create HW accellerated image.");
                 scaleMode = ScaleMode.NORMAL;
-                img = new BufferedImage(width * scale, height * scale, BufferedImage.TYPE_INT_RGB);
+                img = new BufferedImage(scaleMode.getWidth(), scaleMode.getHeight(), BufferedImage.TYPE_INT_RGB);
 
             }
 
@@ -166,8 +176,8 @@ public class BufferView extends JPanel {
 
 
         // Set component size & bounds:
-        setSize(width * scale, height * scale);
-        setBounds(getX(), getY(), width * scale, height * scale);
+        setSize(scaleMode.getWidth(), scaleMode.getHeight());
+        setBounds(getX(), getY(), scaleMode.getWidth(), scaleMode.getHeight());
 
 
         // Repaint component:
@@ -239,7 +249,7 @@ public class BufferView extends JPanel {
             return;
         }
 
-        if (scaleMode == ScaleMode.HW2X) {
+        if (scaleMode.useHWScaling()) {
 
             // 2X Hardware accellerated scaling.
             if (g != null && img != null && vimg != null) {
@@ -248,30 +258,15 @@ public class BufferView extends JPanel {
                 vimg.getGraphics().drawImage(img, 0, 0, null);
 
                 // Draw accellerated image scaled:
-                g.drawImage(vimg, 0, 0, width * 2, height * 2, null);
-
-            }
-
-        } else if (scaleMode == ScaleMode.HW3X) {
-
-            // 3X Hardware accellerated scaling.
-            if (g != null && img != null && vimg != null) {
-
-                // Draw BufferedImage into accellerated image:
-                vimg.getGraphics().drawImage(img, 0, 0, null);
-
-                // Draw accellerated image scaled:
-                g.drawImage(vimg, 0, 0, width * 3, height * 3, null);
+                g.drawImage(vimg, 0, 0, scaleMode.getWidth(), scaleMode.getHeight(), null);
 
             }
 
         } else {
-
             // 2X Software scaling.
             if (g != null && img != null) {
-
                 // Draw big BufferedImage directly:
-                g.drawImage(img, 0, 0, width * 2, height * 2, null);
+                g.drawImage(img, 0, 0, scaleMode.getWidth(), scaleMode.getHeight(), null);
 
             }
 
@@ -319,15 +314,6 @@ public class BufferView extends JPanel {
         }
 
     }
-
-    public int getBufferWidth() {
-        return width;
-    }
-
-    public int getBufferHeight() {
-        return height;
-    }
-
     public void setUsingMenu(boolean val) {
         usingMenu = val;
     }

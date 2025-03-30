@@ -23,8 +23,8 @@ public class ScreenView extends BufferView {
     private MyMouseAdapter mouse;
     private boolean notifyImageReady;
 
-    public ScreenView(NES nes, int width, int height) {
-        super(nes, width, height);
+    public ScreenView(NES nes) {
+        super(nes);
     }
 
     public void init() {

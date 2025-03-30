@@ -95,7 +95,7 @@ public class NESva extends Frame {
             if (config.scanlines()) {
                 panelScreen.setScaleMode(BufferView.ScaleMode.SCANLINE);
             } else {
-                panelScreen.setScaleMode(BufferView.ScaleMode.NONE);
+                panelScreen.setScaleMode(BufferView.ScaleMode.HW3X);
             }
 
             this.setSize(512, 480);

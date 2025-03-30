@@ -37,8 +37,7 @@ public class AppletUI implements UI {
     }
 
     public void init(boolean showGui) {
-
-        vScreen = new ScreenView(nes, 256, 240);
+        vScreen = new ScreenView(nes);
         vScreen.setBgColor(nesva.getBgColor().getRGB());
         vScreen.setVisible(true);
         vScreen.setNotifyImageReady(true);
