@@ -1,6 +1,6 @@
 package io.jd;
 
-import copied.BufferView;
+import copied.ScaleMode;
 
 public record Config(
         String rom,
@@ -12,7 +12,7 @@ public record Config(
         PlayerControls player1Controls,
         PlayerControls player2Controls,
         int romSize,
-        BufferView.ScaleMode scaleMode
+        ScaleMode scaleMode
 ) {
     public static Config get(String rom) {
         return new Config(
@@ -25,7 +25,7 @@ public record Config(
                 PlayerControls.PLAYER1_DEFAULT,
                 PlayerControls.PLAYER2_DEFAULT,
                 -1,
-                BufferView.ScaleMode.NORMAL
+                ScaleMode.NORMAL
         );
     }
 }
