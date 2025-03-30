@@ -191,7 +191,7 @@ public class ROM {
         return vromTile[bank];
     }
 
-    public int getMirroringType() {
+    public MirroringType getMirroringType() {
 
         if (fourScreen) {
             return MirroringType.FOURSCREEN_MIRRORING;

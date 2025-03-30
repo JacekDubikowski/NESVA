@@ -91,7 +91,7 @@ public class PPU {
     // Name table data:
     int[] ntable1 = new int[4];
     NameTable[] nameTable;
-    int currentMirroring = -1;
+    MirroringType currentMirroring = null;
     // Palette data:
     int[] sprPalette = new int[16];
     int[] imgPalette = new int[16];
@@ -189,7 +189,7 @@ public class PPU {
 
 
     // Sets Nametable mirroring.
-    public void setMirroring(int mirroring) {
+    public void setMirroring(MirroringType mirroring) {
 
         if (mirroring == currentMirroring) {
             return;
@@ -1890,7 +1890,7 @@ public class PPU {
         spr0HitY = 0;
         mapperIrqCounter = 0;
 
-        currentMirroring = -1;
+        currentMirroring = null;
 
         firstWrite = true;
         requestEndFrame = false;
