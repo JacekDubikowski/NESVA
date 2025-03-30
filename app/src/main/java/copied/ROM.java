@@ -15,8 +15,6 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.io.RandomAccessFile;
-
 import mappers.Mapper001;
 import mappers.Mapper002;
 import mappers.Mapper003;
@@ -80,7 +78,6 @@ public class ROM {
     boolean fourScreen;
     int mapperType;
     String fileName;
-    RandomAccessFile raFile;
     boolean enableSave = true;
 
     public ROM() {
