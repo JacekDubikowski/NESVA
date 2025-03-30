@@ -253,16 +253,14 @@ public class NES {
         }
 
         // Load ROM file:
-
-        rom = new ROM();
-        rom.load(file, new FileLoader(progress -> getGui().showLoadProgress(progress)));
+        rom = ROM.load(file, new FileLoader(progress -> getGui().showLoadProgress(progress)));
 
         // The CPU will load
         // the ROM into the CPU
         // and PPU memory.
 
         reset();
-        memMapper = rom.memoryMapper;
+        memMapper = rom.getMemoryMapper();
         memMapper.init(this);
         cpu.setMapper(memMapper);
         memMapper.loadROM(rom);

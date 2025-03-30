@@ -584,7 +584,7 @@ class MapperDefault implements MemoryMapper {
 
     public void loadBatteryRam() {
 
-        if (rom.batteryRam) {
+        if (rom.isBatteryRam()) {
 
             short[] ram = rom.getBatteryRam();
             if (ram != null && ram.length == 0x2000) {

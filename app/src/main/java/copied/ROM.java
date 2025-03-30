@@ -21,55 +21,59 @@ import mappers.MirroringType;
 import static mappers.MapperFactory.mapperForType;
 
 public class ROM {
+    private static final String EXPECTED_FCODE = "NES" + new String(new byte[]{0x1A});
 
-    public static final String EXPECTED_FCODE = "NES" + new String(new byte[]{0x1A});
-    boolean failedSaveFile = false;
-    boolean saveRamUpToDate = true;
-    short[] header;
-    short[][] rom;
-    short[][] vrom;
-    short[] saveRam;
-    Tile[][] vromTile;
-    int romCount;
-    int vromCount;
-    int mirroring;
-    public boolean batteryRam;
-    boolean trainer;
-    boolean fourScreen;
-    MemoryMapper memoryMapper;
-    String fileName;
-    boolean enableSave = true;
+    private final short[] saveRam = new short[0];
+    private final short[] header;
+    private final short[][] rom;
+    private final short[][] vrom;
+    private final Tile[][] vromTile;
+    private final int romCount;
+    private final int vromCount;
+    private final int mirroring;
+    private final boolean batteryRam;
+    private final boolean trainer;
+    private final boolean fourScreen;
+    private final MemoryMapper memoryMapper;
 
-    public ROM() {
+    private ROM(short[] header, short[][] rom, short[][] vrom, Tile[][] vromTile, int romCount, int vromCount, int mirroring, boolean batteryRam, boolean trainer, boolean fourScreen, MemoryMapper memoryMapper) {
+        this.header = header;
+        this.rom = rom;
+        this.vrom = vrom;
+        this.vromTile = vromTile;
+        this.romCount = romCount;
+        this.vromCount = vromCount;
+        this.mirroring = mirroring;
+        this.batteryRam = batteryRam;
+        this.trainer = trainer;
+        this.fourScreen = fourScreen;
+        this.memoryMapper = memoryMapper;
     }
 
-    public void load(String fileName, FileLoader loader) {
+    public static ROM load(String fileName, FileLoader loader) {
+        short[] romContent = loader.loadFile(fileName);
 
-        this.fileName = fileName;
-        short[] b = loader.loadFile(fileName);
-
-        if (b == null || b.length == 0) {
+        if (romContent == null || romContent.length == 0) {
             throw new IllegalArgumentException("Unable to load ROM file.");
         }
 
         // Read header:
-        header = new short[16];
-        System.arraycopy(b, 0, header, 0, 16);
+        var header = new short[16];
+        System.arraycopy(romContent, 0, header, 0, 16);
 
         // Check first four bytes:
-        String fcode = new String(new byte[]{(byte) b[0], (byte) b[1], (byte) b[2], (byte) b[3]});
+        String fcode = new String(new byte[]{(byte) romContent[0], (byte) romContent[1], (byte) romContent[2], (byte) romContent[3]});
         if (!fcode.equals(EXPECTED_FCODE)) {
-            //System.out.println("Header is incorrect.");
             throw new IllegalArgumentException("Incorrect header of rom file '%s'".formatted(fileName));
         }
 
         // Read header:
-        romCount = header[4];
-        vromCount = header[5] * 2; // Get the number of 4kB banks, not 8kB
-        mirroring = ((header[6] & 1) != 0 ? 1 : 0);
-        batteryRam = (header[6] & 2) != 0;
-        trainer = (header[6] & 4) != 0;
-        fourScreen = (header[6] & 8) != 0;
+        var romCount = header[4];
+        var vromCount = header[5] * 2; // Get the number of 4kB banks, not 8kB
+        var mirroring = ((header[6] & 1) != 0 ? 1 : 0);
+        var batteryRam = (header[6] & 2) != 0;
+        var trainer = (header[6] & 4) != 0;
+        var fourScreen = (header[6] & 8) != 0;
         var mapperType = (header[6] >> 4) | (header[7] & 0xF0);
 
         // Battery RAM?
@@ -90,9 +94,9 @@ public class ROM {
             mapperType &= 0xF;
         }
 
-        rom = new short[romCount][16384];
-        vrom = new short[vromCount][4096];
-        vromTile = new Tile[vromCount][256];
+        var rom = new short[romCount][16384];
+        var vrom = new short[vromCount][4096];
+        var vromTile = new Tile[vromCount][256];
 
         //try{
 
@@ -100,10 +104,10 @@ public class ROM {
         int offset = 16;
         for (int i = 0; i < romCount; i++) {
             for (int j = 0; j < 16384; j++) {
-                if (offset + j >= b.length) {
+                if (offset + j >= romContent.length) {
                     break;
                 }
-                rom[i][j] = b[offset + j];
+                rom[i][j] = romContent[offset + j];
             }
             offset += 16384;
         }
@@ -111,10 +115,10 @@ public class ROM {
         // Load CHR-ROM banks:
         for (int i = 0; i < vromCount; i++) {
             for (int j = 0; j < 4096; j++) {
-                if (offset + j >= b.length) {
+                if (offset + j >= romContent.length) {
                     break;
                 }
-                vrom[i][j] = b[offset + j];
+                vrom[i][j] = romContent[offset + j];
             }
             offset += 4096;
         }
@@ -143,23 +147,8 @@ public class ROM {
             }
         }
 
-        memoryMapper = mapperForType(mapperType);
-
-        /*
-        tileIndex = (address+i)>>4;
-        leftOver = (address+i) % 16;
-        if(leftOver<8){
-        ptTile[tileIndex].setScanline(leftOver,value[offset+i],ppuMem.load(address+8+i));
-        }else{
-        ptTile[tileIndex].setScanline(leftOver-8,ppuMem.load(address-8+i),value[offset+i]);
-        }
-         */
-
-        /*}catch(Exception e){
-        //System.out.println("Error reading ROM & VROM banks. Corrupt file?");
-        valid = false;
-        return;
-        }*/
+        var memoryMapper = mapperForType(mapperType);
+        return new ROM(header, rom, vrom, vromTile, romCount, vromCount, mirroring, batteryRam, trainer, fourScreen, memoryMapper);
     }
 
     public int getRomBankCount() {
@@ -169,10 +158,6 @@ public class ROM {
     // Returns number of 4kB VROM banks.
     public int getVromBankCount() {
         return vromCount;
-    }
-
-    public short[] getHeader() {
-        return header;
     }
 
     public short[] getRomBank(int bank) {
@@ -202,14 +187,6 @@ public class ROM {
 
     }
 
-    public boolean hasBatteryRam() {
-        return batteryRam;
-    }
-
-    public boolean hasTrainer() {
-        return trainer;
-    }
-
     public void setSaveState(boolean enableSave) {
         //this.enableSave = enableSave;
         if (enableSave && !batteryRam) {
@@ -217,16 +194,20 @@ public class ROM {
         }
     }
 
+    public boolean isBatteryRam() {
+        return batteryRam;
+    }
+
     public short[] getBatteryRam() {
-
         return saveRam;
-
     }
 
     public void destroy() {
-
 //      closeRom();
+    }
 
+    public MemoryMapper getMemoryMapper() {
+        return memoryMapper;
     }
 
     /*
